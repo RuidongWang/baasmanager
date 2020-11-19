@@ -12,9 +12,9 @@
   * nfs安装和配置
     * yum -y install nfs-utils rpcbind
     * id (查看当前用户的uid和gid)
-    * vim /etc/exports (添加配置,相应修改)  
+    * vim /etc/exports (添加配置,相应修改)
       ```
-      /baas根目录/baas-nfsshared 192.168.1.0/24(rw,sync,insecure,anonuid=当前用户的uid,anongid=当前用户的gid)
+      /baas根目录/baas-nfsshared *(rw,sync,insecure,anonuid=当前用户的uid,anongid=当前用户的gid)
       ```
     * exportfs -r (配置生效)
     * service rpcbind start &&  service nfs start (启动rpcbind、nfs服务)

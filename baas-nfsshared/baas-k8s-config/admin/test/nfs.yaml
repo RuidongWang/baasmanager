@@ -1,0 +1,192 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: admintestorderer-pv
+  labels:
+    app: admintestorderer-pv
+spec:
+  capacity:
+    storage: 10Mi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /root/workSpace/baasmanager/baas-nfsshared/baas-artifacts/admin/test
+    server: 10.10.100.211
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ namespace: admintestorderer
+ name: admintestorderer-pv
+spec:
+ accessModes:
+   - ReadWriteMany
+ resources:
+   requests:
+     storage: 10Mi
+ selector:
+   matchLabels:
+     app: admintestorderer-pv
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: admintestorderer-pvdata
+  labels:
+    app: admintestorderer-pvdata
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /root/workSpace/baasmanager/baas-nfsshared/baas-fabric-data/admin/test
+    server: 10.10.100.211
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ namespace: admintestorderer
+ name: admintestorderer-pvdata
+spec:
+ accessModes:
+   - ReadWriteMany
+ resources:
+   requests:
+     storage: 10Gi
+ selector:
+   matchLabels:
+     app: admintestorderer-pvdata
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: admintesto1-pv
+  labels:
+    app: admintesto1-pv
+spec:
+  capacity:
+    storage: 10Mi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /root/workSpace/baasmanager/baas-nfsshared/baas-artifacts/admin/test
+    server: 10.10.100.211
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ namespace: admintesto1
+ name: admintesto1-pv
+spec:
+ accessModes:
+   - ReadWriteMany
+ resources:
+   requests:
+     storage: 10Mi
+ selector:
+   matchLabels:
+     app: admintesto1-pv
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: admintesto1-pvdata
+  labels:
+    app: admintesto1-pvdata
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /root/workSpace/baasmanager/baas-nfsshared/baas-fabric-data/admin/test
+    server: 10.10.100.211
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ namespace: admintesto1
+ name: admintesto1-pvdata
+spec:
+ accessModes:
+   - ReadWriteMany
+ resources:
+   requests:
+     storage: 10Gi
+ selector:
+   matchLabels:
+     app: admintesto1-pvdata
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: admintesto2-pv
+  labels:
+    app: admintesto2-pv
+spec:
+  capacity:
+    storage: 10Mi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /root/workSpace/baasmanager/baas-nfsshared/baas-artifacts/admin/test
+    server: 10.10.100.211
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ namespace: admintesto2
+ name: admintesto2-pv
+spec:
+ accessModes:
+   - ReadWriteMany
+ resources:
+   requests:
+     storage: 10Mi
+ selector:
+   matchLabels:
+     app: admintesto2-pv
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: admintesto2-pvdata
+  labels:
+    app: admintesto2-pvdata
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /root/workSpace/baasmanager/baas-nfsshared/baas-fabric-data/admin/test
+    server: 10.10.100.211
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ namespace: admintesto2
+ name: admintesto2-pvdata
+spec:
+ accessModes:
+   - ReadWriteMany
+ resources:
+   requests:
+     storage: 10Gi
+ selector:
+   matchLabels:
+     app: admintesto2-pvdata
+

@@ -30,7 +30,8 @@ spec:
     spec:
         containers:
         - name: peer{{index}}-{{namespace}}-couchdb
-          image: hyperledger/fabric-couchdb:0.4.15
+          image: hyperledger/fabric-couchdb:latest
+          imagePullPolicy: IfNotPresent
           resources:
             limits:
               cpu: "0.25"
@@ -48,7 +49,7 @@ spec:
              subPath: couchdb.peer{{index}}.{{namespace}}
 
         - name: peer{{index}}-{{namespace}}
-          image: hyperledger/fabric-peer:1.4.1
+          image: hyperledger/fabric-peer:1.4
           resources:
             limits:
               cpu: "0.25"
@@ -80,10 +81,10 @@ spec:
              value: "/etc/hyperledger/fabric/tls/server.key"
            - name: CORE_PEER_TLS_ROOTCERT_FILE
              value: "/etc/hyperledger/fabric/tls/ca.crt"
+           - name: CORE_PEER_ADDRESSAUTODETECT
+             value: "true"
            - name: CORE_PEER_LISTENADDRESS
              value: "0.0.0.0:7051"
-           - name: CORE_PEER_CHAINCODEADDRESS
-             value: "peer{{index}}.{{namespace}}:7052"
            - name: CORE_PEER_CHAINCODELISTENADDRESS
              value: "0.0.0.0:7052"
            - name: CORE_PEER_ID

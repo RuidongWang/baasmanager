@@ -1,0 +1,184 @@
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  namespace: admintesto1
+  name: ca-admintesto1
+  labels:
+    app: hyperledger
+    role: ca
+    org: admintesto1
+    name: ca
+spec:
+  selector:
+    matchLabels:
+      app: hyperledger
+      role: ca
+      org: admintesto1
+      name: ca
+  replicas: 1
+  minReadySeconds: 10
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: hyperledger
+        role: ca
+        org: admintesto1
+        name: ca
+    spec:
+     containers:
+       - name: ca
+         image: hyperledger/fabric-ca:1.4
+         imagePullPolicy: IfNotPresent
+         resources:
+           limits:
+             cpu: "0.25"
+             memory: "512Mi"
+         env:
+         - name: FABRIC_CA_HOME
+           value: "/etc/hyperledger/fabric-ca-server"
+         - name: FABRIC_CA_SERVER_CA_NAME
+           value: "ca.admintesto1"
+         - name: FABRIC_CA_SERVER_CA_CERTFILE
+           value: "/etc/hyperledger/fabric-ca-server-config/ca.admintesto1-cert.pem"
+         - name: FABRIC_CA_SERVER_CA_KEYFILE
+           value: "/etc/hyperledger/fabric-ca-server-config/61ec79f4bab709e695448dc59aec753222e4feb05429a81e9c9041ea69fa32b5_sk"
+         - name: FABRIC_CA_SERVER_TLS_ENABLED
+           value: "true"
+         - name: FABRIC_CA_SERVER_TLS_CERTFILE
+           value: "/etc/hyperledger/fabric-ca-server-config/ca.admintesto1-cert.pem"
+         - name: FABRIC_CA_SERVER_TLS_KEYFILE
+           value: "/etc/hyperledger/fabric-ca-server-config/61ec79f4bab709e695448dc59aec753222e4feb05429a81e9c9041ea69fa32b5_sk"
+         - name: GODEBUG
+           value: "netdns=go"
+         ports:
+          - containerPort: 7054
+         command: ["sh"]
+         args: ["-c", " fabric-ca-server start -b admin:adminpw -d "]
+         volumeMounts:
+          - mountPath: /etc/hyperledger/fabric-ca-server-config
+            name: certificate
+            subPath: crypto-config/peerOrganizations/admintesto1/ca/
+     volumes:
+       - name: certificate
+         persistentVolumeClaim:
+            claimName: admintesto1-pv
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+   namespace: admintesto1
+   name: ca
+   labels:
+      app: hyperledger
+      role: ca
+      org: admintesto1
+      name: ca
+spec:
+ selector:
+   app: hyperledger
+   role: ca
+   org: admintesto1
+   name: ca
+ type: NodePort
+ ports:
+   - name: endpoint
+     protocol: TCP
+     port: 7054
+     targetPort: 7054
+#     nodePort: 30054
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  namespace: admintesto2
+  name: ca-admintesto2
+  labels:
+    app: hyperledger
+    role: ca
+    org: admintesto2
+    name: ca
+spec:
+  selector:
+    matchLabels:
+      app: hyperledger
+      role: ca
+      org: admintesto2
+      name: ca
+  replicas: 1
+  minReadySeconds: 10
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: hyperledger
+        role: ca
+        org: admintesto2
+        name: ca
+    spec:
+     containers:
+       - name: ca
+         image: hyperledger/fabric-ca:1.4
+         imagePullPolicy: IfNotPresent
+         resources:
+           limits:
+             cpu: "0.25"
+             memory: "512Mi"
+         env:
+         - name: FABRIC_CA_HOME
+           value: "/etc/hyperledger/fabric-ca-server"
+         - name: FABRIC_CA_SERVER_CA_NAME
+           value: "ca.admintesto2"
+         - name: FABRIC_CA_SERVER_CA_CERTFILE
+           value: "/etc/hyperledger/fabric-ca-server-config/ca.admintesto2-cert.pem"
+         - name: FABRIC_CA_SERVER_CA_KEYFILE
+           value: "/etc/hyperledger/fabric-ca-server-config/f983dc9e4fcb3ce155baa83b8c1d7cb4e96fe783c098c6067866bc879f61b1fa_sk"
+         - name: FABRIC_CA_SERVER_TLS_ENABLED
+           value: "true"
+         - name: FABRIC_CA_SERVER_TLS_CERTFILE
+           value: "/etc/hyperledger/fabric-ca-server-config/ca.admintesto2-cert.pem"
+         - name: FABRIC_CA_SERVER_TLS_KEYFILE
+           value: "/etc/hyperledger/fabric-ca-server-config/f983dc9e4fcb3ce155baa83b8c1d7cb4e96fe783c098c6067866bc879f61b1fa_sk"
+         - name: GODEBUG
+           value: "netdns=go"
+         ports:
+          - containerPort: 7054
+         command: ["sh"]
+         args: ["-c", " fabric-ca-server start -b admin:adminpw -d "]
+         volumeMounts:
+          - mountPath: /etc/hyperledger/fabric-ca-server-config
+            name: certificate
+            subPath: crypto-config/peerOrganizations/admintesto2/ca/
+     volumes:
+       - name: certificate
+         persistentVolumeClaim:
+            claimName: admintesto2-pv
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+   namespace: admintesto2
+   name: ca
+   labels:
+      app: hyperledger
+      role: ca
+      org: admintesto2
+      name: ca
+spec:
+ selector:
+   app: hyperledger
+   role: ca
+   org: admintesto2
+   name: ca
+ type: NodePort
+ ports:
+   - name: endpoint
+     protocol: TCP
+     port: 7054
+     targetPort: 7054
+#     nodePort: 30054

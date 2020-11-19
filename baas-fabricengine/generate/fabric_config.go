@@ -86,12 +86,13 @@ type Capabilities struct {
 	Application ApplicationCapabilities `yaml:"Application"`
 }
 type ChannelCapabilities struct {
-	V1_3 bool `yaml:"V1_3"`
+	V1_4_3 bool `yaml:"V1_4_3"`
 }
 type OrdererCapabilities struct {
-	V1_1 bool `yaml:"V1_1"`
+	V1_4_2 bool `yaml:"V1_4_2"`
 }
 type ApplicationCapabilities struct {
+	V1_4_2 bool `yaml:"V1_4_2"`
 	V1_3 bool `yaml:"V1_3"`
 	V1_2 bool `yaml:"V1_2"`
 	V1_1 bool `yaml:"V1_1"`
@@ -332,13 +333,14 @@ func (f FabricConfig) SetOrganizations() FabricConfig {
 func (f FabricConfig) SetCapabilities() FabricConfig {
 	capabilities := Capabilities{
 		Channel: ChannelCapabilities{
-			V1_3: true,
+			V1_4_3: true,
 		},
 		Orderer: OrdererCapabilities{
-			V1_1: true,
+			V1_4_2: true,
 		},
 		Application: ApplicationCapabilities{
-			V1_3: true,
+			V1_4_2: true,
+			V1_3: false,
 			V1_2: false,
 			V1_1: false,
 		},
